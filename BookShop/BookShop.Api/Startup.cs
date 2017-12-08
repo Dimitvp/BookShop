@@ -1,5 +1,7 @@
 ﻿namespace BookShop.Api
 {
+    using AutoMapper;
+    using BookShop.Api.Infrastructure.Extencions;
     using BookShop.Data;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Builder;
@@ -24,12 +26,18 @@
                 .AddDbContext<BookShopDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddAutoMapper();
+
+            services.AddDomainServices();
+
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
