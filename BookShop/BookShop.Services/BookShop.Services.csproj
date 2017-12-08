@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookShop.Common\BookShop.Common.csproj" />
     <ProjectReference Include="..\BookShop.Data\BookShop.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Implementations\" />
   </ItemGroup>
 
 </Project>
