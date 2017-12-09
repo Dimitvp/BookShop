@@ -1,10 +1,12 @@
 ﻿namespace BookShop.Services.Implementations
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using BookShop.Data;
-    using BookShop.Services.Models.Author;
+    using Models.Author;
+    using Models.Book;
     using Microsoft.EntityFrameworkCore;
 
     public class AuthorService : IAuthorService
@@ -36,5 +38,15 @@
                 .Where(a => a.Id == id)
                 .ProjectTo<AuthorDetailsServiceModel>()
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<BookWithCategoriesServiceModel>> Books(int authorId)
+            => await this.db
+                .Books
+                .Where(b => b.AuthorId == authorId)
+                .ProjectTo<BookWithCategoriesServiceModel>()
+                .ToListAsync();
+
+        public async Task<bool> Exists(int id)
+            => await this.db.Authors.AnyAsync(a => a.Id == id);
     }
 }
